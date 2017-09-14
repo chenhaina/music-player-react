@@ -21,7 +21,7 @@ module.exports = {
         new HtmlWebpackPlugin({
           template: './index.tpl.html',
           inject: 'body',
-          filename: '../index.html'
+          filename: './index.html'
         }),
         new webpack.optimize.OccurrenceOrderPlugin(),  
         new webpack.HotModuleReplacementPlugin(), 
