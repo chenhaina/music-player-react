@@ -1,13 +1,21 @@
 import React from 'react';
 import Progress from '../components/progress';
 import './player.less';
-import { Link }from 'react-router'
-
+import { Link }from 'react-router';
 let PubSub = require('pubsub-js');
 
 
 let duration=null;
-class Player extends React.Component{	  
+class Player extends React.Component{	 
+		constructor(props) {
+	    super(props)
+	    this.state = {
+	        progress: 0,
+			volume: 0,
+			isPlay: true,
+			leftTime: ''			
+	    }
+	  }
 	componentDidMount() {
 		$("#player").bind($.jPlayer.event.timeupdate, (e) => {
 			duration = e.jPlayer.status.duration;
@@ -53,18 +61,22 @@ class Player extends React.Component{
 	playPrev() {
 		PubSub.publish('PLAY_PREV');
 	}
-	changeRepeat() {
-		PubSub.publish('CHANAGE_REPEAT');
+	changerepeatState() {	
+		let repstate=this.props.repeatState;
+		if(repstate==='once'){
+			PubSub.publish('PLAY_ONCE');
+		}
+		else if(repstate==='cycle'){			
+			PubSub.publish('PLAY_CYCLE');
+		}
+		else if(repstate==='random'){
+			PubSub.publish('PLAY_RANDOM');
+		}
+		else{
+			PubSub.publish('PLAY_CYCLE');
+		}
+		
 	}
-	constructor(props) {
-	    super(props)
-	    this.state = {
-	        progress: 0,
-			volume: 0,
-			isPlay: true,
-			leftTime: ''
-	    }
-	  }
  render() {
  	
         return (
@@ -103,7 +115,7 @@ class Player extends React.Component{
 	                			<i className="icon next ml20" onClick={this.playNext}></i>
                 			</div>
                 			<div className="-col-auto">
-                				<i className="icon repeat-once" onClick={this.changeRepeat}></i>
+                				<i className={`icon repeat-${this.props.repeatState}`} onClick={this.changerepeatState.bind(this)}></i>
                 			</div>
                 		</div>
                 	</div>
