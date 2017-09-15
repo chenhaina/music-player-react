@@ -15,13 +15,13 @@ module.exports = {
     output: {
         path: path.join(__dirname, '/dist/'),
         filename: '[name].js',
-        publicPath: ''
+        publicPath: 'dist/'
     },
     plugins: [
         new HtmlWebpackPlugin({
           template: './index.tpl.html',
           inject: 'body',
-          filename: './index.html'
+          filename: '../index.html'
         }),
         new webpack.optimize.OccurrenceOrderPlugin(),  
         new webpack.HotModuleReplacementPlugin(), 
