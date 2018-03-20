@@ -44,22 +44,34 @@ class Player extends React.Component{
 	}
 	changeVolumeHandler(progress) {
 		$("#player").jPlayer("volume", progress);
+		this.setState({
+				volume: progress * 100,
+			});
 	}
 	play() {
+		let imgAnimation = this.refs.covermate;
 		if (this.state.isPlay) {
 			$("#player").jPlayer("pause");
+			imgAnimation.style = 'animation-play-state: paused';
 		} else {
 			$("#player").jPlayer("play");
+			 imgAnimation.style = 'animation-play-state: running';
 		}
 		this.setState({
 			isPlay: !this.state.isPlay
 		});
 	}
 	playNext() {
-		PubSub.publish('PLAY_NEXT');
+		this.setState({
+			isPlay: true
+		});
+		PubSub.publish('PLAY_NEXT');		
 	}
 	playPrev() {
-		PubSub.publish('PLAY_PREV');
+		this.setState({
+			isPlay: true
+		});
+		PubSub.publish('PLAY_PREV');				
 	}
 	changerepeatState() {	
 		let repstate=this.props.repeatState;
@@ -110,9 +122,9 @@ class Player extends React.Component{
                 		</div>
                 		<div className="mt35 row">
                 			<div>
-	                			<i className="icon prev" onClick={this.playPrev}></i>
+	                			<i className="icon prev" onClick={this.playPrev.bind(this)}></i>
 	                			<i className={`icon ml20 ${this.state.isPlay ? 'pause' : 'play'}`} onClick={this.play.bind(this)}></i>
-	                			<i className="icon next ml20" onClick={this.playNext}></i>
+	                			<i className="icon next ml20" onClick={this.playNext.bind(this)}></i>
                 			</div>
                 			<div className="-col-auto">
                 				<i className={`icon repeat-${this.props.repeatState}`} onClick={this.changerepeatState.bind(this)}></i>
@@ -120,7 +132,7 @@ class Player extends React.Component{
                 		</div>
                 	</div>
                 	<div className="-col-auto cover">
-                		<img src={this.props.currentMusitItem.cover} alt={this.props.currentMusitItem.title}/>
+                		<img ref="covermate" src={this.props.currentMusitItem.cover} alt={this.props.currentMusitItem.title}/>
                 	</div>
                 </div>
             </div>

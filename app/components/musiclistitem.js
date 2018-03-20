@@ -17,8 +17,7 @@ class MusicListItem extends React.Component{
 				<p><strong>{musicItem.title}</strong> - {musicItem.artist}</p>
 				<p onClick={this.deleteMusic.bind(this,musicItem)} className="-col-auto detele"></p>
 				</li>
-			)
-		
+			)		
 	}
 }
 export default MusicListItem;

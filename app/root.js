@@ -15,7 +15,7 @@ class App extends React.Component{
           musicList:MUSIC_LIST,
 		  currentMusitItem: MUSIC_LIST[0],
 		  repeatState:repeatModel[0],
-		  nextMusic:MUSIC_LIST[1]
+		  nextMusic:MUSIC_LIST[1]		 
        }
 	   }
 	 findNextMusic(musicItem){
@@ -71,7 +71,8 @@ class App extends React.Component{
 		}
 		let musicItem = this.state.musicList[index];
 		this.setState({
-			currentMusitItem: musicItem			
+			currentMusitItem: musicItem	,
+			isPlay:true
 		});
 		this.playMusic(musicItem);
 	}
